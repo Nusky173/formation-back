@@ -10,7 +10,8 @@
     <packaging>pom</packaging>
     <!-- Les modules du projet -->
     <modules>
-
+        <module>app</module>
+        <module>library</module>
     </modules>
     <!-- les propriétés du projet -->
     <properties>
@@ -39,6 +40,31 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+
+
+            <!-- MODULES -->
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>library</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>app</artifactId>
+                <version>${project.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                    <version>${spring-boot.version}</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
 </project>
