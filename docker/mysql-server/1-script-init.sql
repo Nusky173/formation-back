@@ -1,9 +1,9 @@
-CREATE TABLE formation.user (
+CREATE TABLE formation.user IF NOT EXISTS (
     id INT PRIMARY KEY,
     name VARCHAR (50) NOT NULL
 );
 
-CREATE TABLE formation.message (
+CREATE TABLE formation.message IF NOT EXISTS (
     id INT PRIMARY KEY,
     content TEXT NOT NULL,
     send_at DATETIME DEFAULT CURRENT_TIMESTAMP,
@@ -11,7 +11,7 @@ CREATE TABLE formation.message (
     FOREIGN KEY (user_id) REFERENCES formation.user (id)
 );
 
-CREATE TABLE tag (
+CREATE TABLE tag IF NOT EXISTS (
     id INT PRIMARY KEY,
     name VARCHAR (50) NOT NULL
 );
