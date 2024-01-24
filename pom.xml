@@ -10,8 +10,6 @@
     <packaging>pom</packaging>
     <!-- Les modules du projet -->
     <modules>
-        <module>app</module>
-        <module>library</module>
         <module>commons</module>
         <module>model-jpa</module>
         <module>persistence-spring</module>
@@ -45,13 +43,16 @@
                 <scope>import</scope>
             </dependency>
 
+            <!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>8.0.33</version>
+            </dependency>
+
+
 
             <!-- MODULES -->
-            <dependency>
-                <groupId>${project.groupId}</groupId>
-                <artifactId>library</artifactId>
-                <version>${project.version}</version>
-            </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>application-spring</artifactId>
@@ -70,11 +71,6 @@
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>commons</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>${project.groupId}</groupId>
-                <artifactId>app</artifactId>
                 <version>${project.version}</version>
             </dependency>
         </dependencies>
