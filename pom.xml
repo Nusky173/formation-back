@@ -12,6 +12,10 @@
     <modules>
         <module>app</module>
         <module>library</module>
+        <module>commons</module>
+        <module>model-jpa</module>
+        <module>persistence-spring</module>
+        <module>application-spring</module>
     </modules>
     <!-- les propriétés du projet -->
     <properties>
@@ -46,6 +50,26 @@
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>library</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>application-spring</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>persistence-spring</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>model-jpa</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>commons</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
