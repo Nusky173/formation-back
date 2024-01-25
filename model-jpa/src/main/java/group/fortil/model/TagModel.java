@@ -25,6 +25,9 @@ public class TagModel {
     )
     private List<MessageModel> messages;
 
+    public TagModel() {
+    }
+
     public TagModel(UUID tagIndex, String name) {
         this.tagIndex = tagIndex;
         this.name = name;

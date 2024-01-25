@@ -24,6 +24,9 @@ public class UserModel {
     @Column(name="user_email", length=50, nullable=false, unique = true)
     private String email;
 
+    public UserModel() {
+    }
+
     public UserModel(UUID userIndex, String password, String email) {
         this.userIndex = userIndex;
         this.password = password;

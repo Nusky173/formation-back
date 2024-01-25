@@ -8,6 +8,4 @@ import java.util.List;
 import java.util.UUID;
 
 public interface UserRepository extends CrudRepository<UserModel, UUID> {
-
-    List<MessageModel> findMessagesByUserId(UUID id);
 }

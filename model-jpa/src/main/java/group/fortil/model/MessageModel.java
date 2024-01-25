@@ -7,6 +7,7 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "message")
+@NamedQuery(name="MessageModel.findMessagesByUserIndex", query="select m from MessageModel m where m.userIndex = ?1")
 public class MessageModel {
 
     @Id
@@ -29,7 +30,9 @@ public class MessageModel {
     @JoinColumn(name = "message_user_index")
     private UserModel userIndex;
 
-    //findMessageByTagIndex
+    public MessageModel() {
+    }
+
     public MessageModel(UUID messageIndex, String content, Date publicationDate, UserModel userIndex) {
         this.messageIndex = messageIndex;
         this.content = content;
