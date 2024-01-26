@@ -2,6 +2,7 @@ package group.fortil.model;
 
 import jakarta.persistence.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -10,18 +11,18 @@ public class UserModel {
 
     @Id
     @GeneratedValue(strategy=GenerationType.UUID)
-    @Column(name="user_index")
+    @Column(name="u_index")
     private UUID userIndex;
-    @Column(name="user_last_name", length=50, nullable=false)
+    @Column(name="last_name", length=50, nullable=false)
     private String lastName;
 
-    @Column(name="user_first_name", length=50, nullable=false)
+    @Column(name="first_name", length=50, nullable=false)
     private String firstName;
 
-    @Column(name="user_password", length=50, nullable=false)
+    @Column(name="password", length=50, nullable=false)
     private String password;
 
-    @Column(name="user_email", length=50, nullable=false, unique = true)
+    @Column(name="email", length=50, nullable=false, unique = true)
     private String email;
 
     public UserModel() {

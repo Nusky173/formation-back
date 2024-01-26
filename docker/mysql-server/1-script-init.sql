@@ -17,11 +17,8 @@ CREATE TABLE IF NOT EXISTS formation.tag (
 );
 
 CREATE TABLE IF NOT EXISTS formation.tagOnMessage(
-     id VARCHAR(36) PRIMARY KEY DEFAULT (uuid()),
-    content TEXT NOT NULL,
-    message_id  VARCHAR(32) NOT NULL,
-    tag_id  VARCHAR(32) NOT NULL,
-    FOREIGN KEY (message_id) REFERENCES formation.message (id),
-    FOREIGN KEY (tag_id) REFERENCES formation.tag (id)
+     message_id VARCHAR(36),
+     tag_id VARCHAR(36),
+     PRIMARY KEY (message_id, tags_id),
 );
 

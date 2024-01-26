@@ -3,32 +3,42 @@ package group.fortil.model;
 import jakarta.persistence.*;
 
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
 @Table(name = "message")
-@NamedQuery(name="MessageModel.findMessagesByUserIndex", query="select m from MessageModel m where m.userIndex = ?1")
+@NamedQueries({
+    @NamedQuery(name="MessageModel.findMessagesByUserIndex", query="select m from MessageModel m where m.user = ?1")
+})
 public class MessageModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "message_index")
+    @Column(name = "m_index")
     private UUID messageIndex;
 
-    @Column(name = "message_content", length = 50, nullable = false)
+    @Column(name = "content", length = 50, nullable = false)
     private String content;
 
-    @Column(name = "message_publication_date", nullable = false, updatable = false)
+    @Column(name = "publication_date", nullable = false, updatable = false)
     @Temporal(TemporalType.DATE)
     private Date publicationDate;
 
-    @Column(name = "message_modification_date")
+    @Column(name = "modification_date")
     @Temporal(TemporalType.DATE)
     private Date modificationDate;
 
-    @ManyToOne
-    @JoinColumn(name = "message_user_index")
-    private UserModel userIndex;
+    @ManyToOne(optional = false)
+    @JoinColumn(name="user_index")
+    private UserModel user;
+
+    @ManyToMany
+    @JoinTable(name = "tag_message",
+        joinColumns= @JoinColumn(name="message_index", referencedColumnName = "m_index", table = "message"),
+        inverseJoinColumns=@JoinColumn(name="tag_index", referencedColumnName="t_index", table = "tag")
+    )
+    private List<TagModel> tags;
 
     public MessageModel() {
     }
@@ -37,7 +47,7 @@ public class MessageModel {
         this.messageIndex = messageIndex;
         this.content = content;
         this.publicationDate = publicationDate;
-        this.userIndex = userIndex;
+        this.user = userIndex;
     }
 
     public UUID getMessageIndex() {
@@ -65,7 +75,31 @@ public class MessageModel {
     }
 
     public UserModel getUserIndex() {
-        return userIndex;
+        return user;
+    }
+
+    public void setMessageIndex(UUID messageIndex) {
+        this.messageIndex = messageIndex;
+    }
+
+    public void setPublicationDate(Date publicationDate) {
+        this.publicationDate = publicationDate;
+    }
+
+    public UserModel getUser() {
+        return user;
+    }
+
+    public void setUser(UserModel user) {
+        this.user = user;
+    }
+
+    public List<TagModel> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<TagModel> tags) {
+        this.tags = tags;
     }
 
     @Override
@@ -75,7 +109,7 @@ public class MessageModel {
             ", content='" + content + '\'' +
             ", publicationDate=" + publicationDate +
             ", modificationDate=" + modificationDate +
-            ", userIndex=" + userIndex +
+            ", userIndex=" + user +
             '}';
     }
 }

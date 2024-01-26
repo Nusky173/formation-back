@@ -8,22 +8,16 @@ import java.util.UUID;
 
 @Entity
 @Table(name="tag")
+@NamedQuery(name="TagModel.findAllTagsForAMessage", query="select m from MessageModel m left join TagModel t on m.messageIndex = t.tagIndex")
 public class TagModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name="tag_index", length=50, nullable = false)
+    @Column(name="t_index", length=50, nullable = false)
     private UUID tagIndex;
 
-    @Column(name="tag_content", length=50, nullable = false)
+    @Column(name="content", length=50, nullable = false)
     private String name;
-
-    @ManyToMany
-    @JoinTable(name = "tags_on_messages",
-        joinColumns= @JoinColumn(name="tag_index"),
-        inverseJoinColumns=@JoinColumn(name="message_index")
-    )
-    private List<MessageModel> messages;
 
     public TagModel() {
     }
@@ -44,20 +38,11 @@ public class TagModel {
         this.name = name;
     }
 
-    public List<MessageModel> getMessages() {
-        return messages;
-    }
-
-    public void setMessages(List<MessageModel> messages) {
-        this.messages = messages;
-    }
-
     @Override
     public String toString() {
         return "TagModel{" +
             "tagIndex=" + tagIndex +
             ", name='" + name + '\'' +
-            ", messages=" + messages.stream().map(MessageModel::toString) +
             '}';
     }
 }
