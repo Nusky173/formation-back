@@ -1,6 +1,7 @@
 package group.fortil.model;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.UuidGenerator;
 
 import java.util.Date;
 import java.util.List;
@@ -14,7 +15,7 @@ import java.util.UUID;
 public class MessageModel {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @UuidGenerator
     @Column(name = "m_index")
     private UUID messageIndex;
 

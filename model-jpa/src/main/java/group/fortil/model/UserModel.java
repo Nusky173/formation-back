@@ -1,8 +1,8 @@
 package group.fortil.model;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.UuidGenerator;
 
-import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -10,7 +10,7 @@ import java.util.UUID;
 public class UserModel {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.UUID)
+    @UuidGenerator
     @Column(name="u_index")
     private UUID userIndex;
     @Column(name="last_name", length=50, nullable=false)

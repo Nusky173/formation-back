@@ -1,9 +1,11 @@
-package group.fortil.repository;
+package group.fortil.service;
 
 import group.fortil.model.TagModel;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.UUID;
 
+@Repository
 public interface TagRepository extends CrudRepository<TagModel, UUID> {
 }

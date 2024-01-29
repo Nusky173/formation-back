@@ -2,6 +2,7 @@ package group.fortil.model;
 
 import group.fortil.model.MessageModel;
 import jakarta.persistence.*;
+import org.hibernate.annotations.UuidGenerator;
 
 import java.util.List;
 import java.util.UUID;
@@ -12,7 +13,7 @@ import java.util.UUID;
 public class TagModel {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @UuidGenerator
     @Column(name="t_index", length=50, nullable = false)
     private UUID tagIndex;
 
