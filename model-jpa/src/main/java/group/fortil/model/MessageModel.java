@@ -1,6 +1,7 @@
 package group.fortil.model;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UuidGenerator;
 
 import java.util.Date;
@@ -10,7 +11,7 @@ import java.util.UUID;
 @Entity
 @Table(name = "message")
 @NamedQueries({
-    @NamedQuery(name="MessageModel.findMessagesByUserIndex", query="select m from MessageModel m where m.user = ?1")
+    @NamedQuery(name = "MessageModel.findMessagesByUserIndex", query = "select m from MessageModel m where m.user = ?1")
 })
 public class MessageModel {
 
@@ -24,6 +25,7 @@ public class MessageModel {
 
     @Column(name = "publication_date", nullable = false, updatable = false)
     @Temporal(TemporalType.DATE)
+    @CreationTimestamp
     private Date publicationDate;
 
     @Column(name = "modification_date")
@@ -31,28 +33,29 @@ public class MessageModel {
     private Date modificationDate;
 
     @ManyToOne(optional = false)
-    @JoinColumn(name="user_index")
+    @JoinColumn(name = "user_index")
     private UserModel user;
 
     @ManyToMany
     @JoinTable(name = "tag_message",
-        joinColumns= @JoinColumn(name="message_index", referencedColumnName = "m_index", table = "message"),
-        inverseJoinColumns=@JoinColumn(name="tag_index", referencedColumnName="t_index", table = "tag")
+        joinColumns = @JoinColumn(name = "message_index", referencedColumnName = "m_index", table = "message"),
+        inverseJoinColumns = @JoinColumn(name = "tag_index", referencedColumnName = "t_index", table = "tag")
     )
     private List<TagModel> tags;
 
     public MessageModel() {
     }
 
-    public MessageModel(UUID messageIndex, String content, Date publicationDate, UserModel userIndex) {
+    public MessageModel(
+        UUID messageIndex,
+        String content,
+        Date publicationDate,
+        UserModel user
+    ) {
         this.messageIndex = messageIndex;
         this.content = content;
         this.publicationDate = publicationDate;
-        this.user = userIndex;
-    }
-
-    public UUID getMessageIndex() {
-        return messageIndex;
+        this.user = user;
     }
 
     public String getContent() {
@@ -75,20 +78,8 @@ public class MessageModel {
         this.modificationDate = modificationDate;
     }
 
-    public UserModel getUserIndex() {
-        return user;
-    }
-
-    public void setMessageIndex(UUID messageIndex) {
-        this.messageIndex = messageIndex;
-    }
-
     public void setPublicationDate(Date publicationDate) {
         this.publicationDate = publicationDate;
-    }
-
-    public UserModel getUser() {
-        return user;
     }
 
     public void setUser(UserModel user) {
@@ -106,11 +97,10 @@ public class MessageModel {
     @Override
     public String toString() {
         return "MessageModel{" +
-            "messageIndex=" + messageIndex +
             ", content='" + content + '\'' +
             ", publicationDate=" + publicationDate +
             ", modificationDate=" + modificationDate +
-            ", userIndex=" + user +
+            ", user=" + user +
             '}';
     }
 }

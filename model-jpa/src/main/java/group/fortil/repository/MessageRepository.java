@@ -1,4 +1,4 @@
-package group.fortil.service;
+package group.fortil.repository;
 
 import group.fortil.model.MessageModel;
 import org.springframework.data.repository.CrudRepository;
