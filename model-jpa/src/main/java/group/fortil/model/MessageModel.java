@@ -2,23 +2,21 @@ package group.fortil.model;
 
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UuidGenerator;
 
 import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
 @Entity
 @Table(name = "message")
 @NamedQueries({
     @NamedQuery(name = "MessageModel.findMessagesByUserIndex", query = "select m from MessageModel m where m.user = ?1")
 })
-public class MessageModel {
+public class MessageModel extends Model {
 
     @Id
-    @UuidGenerator
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "m_index")
-    private UUID messageIndex;
+    private Long messageIndex;
 
     @Column(name = "content", length = 50, nullable = false)
     private String content;
@@ -36,7 +34,7 @@ public class MessageModel {
     @JoinColumn(name = "user_index")
     private UserModel user;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "tag_message",
         joinColumns = @JoinColumn(name = "message_index", referencedColumnName = "m_index", table = "message"),
         inverseJoinColumns = @JoinColumn(name = "tag_index", referencedColumnName = "t_index", table = "tag")
@@ -47,15 +45,19 @@ public class MessageModel {
     }
 
     public MessageModel(
-        UUID messageIndex,
         String content,
-        Date publicationDate,
         UserModel user
     ) {
-        this.messageIndex = messageIndex;
         this.content = content;
-        this.publicationDate = publicationDate;
         this.user = user;
+    }
+
+    public Long getMessageIndex() {
+        return messageIndex;
+    }
+
+    public void setMessageIndex(Long messageIndex) {
+        this.messageIndex = messageIndex;
     }
 
     public String getContent() {
@@ -70,6 +72,11 @@ public class MessageModel {
         return publicationDate;
     }
 
+
+    public void setPublicationDate(Date publicationDate) {
+        this.publicationDate = publicationDate;
+    }
+
     public Date getModificationDate() {
         return modificationDate;
     }
@@ -78,8 +85,9 @@ public class MessageModel {
         this.modificationDate = modificationDate;
     }
 
-    public void setPublicationDate(Date publicationDate) {
-        this.publicationDate = publicationDate;
+
+    public UserModel getUser() {
+        return user;
     }
 
     public void setUser(UserModel user) {

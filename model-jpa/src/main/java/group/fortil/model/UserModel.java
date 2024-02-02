@@ -1,19 +1,16 @@
 package group.fortil.model;
 
 import jakarta.persistence.*;
-import org.hibernate.annotations.UuidGenerator;
-
-import java.util.UUID;
 
 @Entity
 @Table(name = "user")
 @NamedQuery(name = "UserModel.findByEmail", query = "select u from UserModel u where u.email = ?1")
-public class UserModel {
+public class UserModel extends Model {
 
     @Id
-    @UuidGenerator
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "u_index")
-    private UUID userIndex;
+    private Long userIndex;
     @Column(name = "last_name", length = 50, nullable = false)
     private String lastName;
 
@@ -41,6 +38,14 @@ public class UserModel {
         this.email = email;
     }
 
+    public Long getUserIndex() {
+        return userIndex;
+    }
+
+    public void setUserIndex(Long userIndex) {
+        this.userIndex = userIndex;
+    }
+
     public String getLastName() {
         return lastName;
     }
@@ -65,13 +70,14 @@ public class UserModel {
         this.email = email;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
     public void setPassword(String password) {
         this.password = password;
     }
 
-    public UUID getIndex() {
-        return userIndex;
-    }
 
     @Override
     public String toString() {

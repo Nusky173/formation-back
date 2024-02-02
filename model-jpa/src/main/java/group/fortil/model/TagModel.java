@@ -1,21 +1,18 @@
 package group.fortil.model;
 
 import jakarta.persistence.*;
-import org.hibernate.annotations.UuidGenerator;
-
-import java.util.UUID;
 
 @Entity
 @Table(name = "tag")
 @NamedQueries({
     @NamedQuery(name = "TagModel.findAllTagsForAMessage", query = "select m from MessageModel m left join TagModel t on m.messageIndex = t.tagIndex")
 })
-public class TagModel {
+public class TagModel extends Model {
 
     @Id
-    @UuidGenerator
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "t_index", nullable = false)
-    private UUID tagIndex;
+    private Long tagIndex;
 
     @Column(name = "content", length = 50, nullable = false)
     private String name;
@@ -24,15 +21,17 @@ public class TagModel {
     }
 
     public TagModel(
-        UUID tagIndex,
         String name
     ) {
-        this.tagIndex = tagIndex;
         this.name = name;
     }
 
-    public UUID getTagIndex() {
+    public Long getTagIndex() {
         return tagIndex;
+    }
+
+    public void setTagIndex(Long tagIndex) {
+        this.tagIndex = tagIndex;
     }
 
     public String getName() {

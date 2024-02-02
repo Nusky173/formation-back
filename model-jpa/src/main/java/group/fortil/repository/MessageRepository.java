@@ -1,12 +1,14 @@
 package group.fortil.repository;
 
+import group.fortil.IRepository;
 import group.fortil.model.MessageModel;
-import org.springframework.data.repository.CrudRepository;
+import group.fortil.model.UserModel;
 import org.springframework.stereotype.Repository;
 
-import java.util.UUID;
+import java.util.List;
 
 @Repository
-public interface MessageRepository extends CrudRepository<MessageModel, UUID> {
+public interface MessageRepository extends IRepository<MessageModel, Long> {
 
+    List<MessageModel> findMessagesByUserIndex(UserModel user);
 }
