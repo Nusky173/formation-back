@@ -3,7 +3,6 @@ package group.fortil.service;
 import group.fortil.business.BusinessImpl;
 
 import java.util.List;
-import java.util.Optional;
 
 public abstract class BusinessServiceImpl<T extends BusinessImpl> implements IBusinessService<T> {
 
@@ -13,8 +12,8 @@ public abstract class BusinessServiceImpl<T extends BusinessImpl> implements IBu
     }
 
     @Override
-    public Optional<T> findById(Long id) {
-        return Optional.empty();
+    public T findById(Long id) {
+        return null;
     }
 
     @Override
@@ -28,7 +27,7 @@ public abstract class BusinessServiceImpl<T extends BusinessImpl> implements IBu
     }
 
     @Override
-    public void delete(T business) {
+    public void delete(Long id) {
 
     }
 }

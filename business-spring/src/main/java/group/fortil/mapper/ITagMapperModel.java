@@ -6,7 +6,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
-public interface ITagMapper extends IMapper<TagBusinessImpl, TagModel> {
+public interface ITagMapperModel extends IMapperModel<TagBusinessImpl, TagModel> {
 
     @Mapping(source = "tagIndex", target = "index")
     @Mapping(source = "name", target = "value")

@@ -1,70 +1,103 @@
 package group.fortil.service;
 
 import group.fortil.business.MessageBusinessImpl;
-import group.fortil.business.UserBusinessImpl;
-import group.fortil.mapper.IMessageMapper;
+import group.fortil.dto.MessageDtoImpl;
+import group.fortil.dto.UserDtoImpl;
+import group.fortil.exception.EntityNotFoundException;
+import group.fortil.mapper.IMessageMapperDto;
+import group.fortil.mapper.IMessageMapperModel;
+import group.fortil.mapper.IUserMapperDto;
 import group.fortil.model.MessageModel;
 import group.fortil.repository.MessageRepository;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.annotation.Validated;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-@Validated
-public class MessageServiceImpl<T extends MessageBusinessImpl> extends BusinessServiceImpl implements IMessageBusinessService<MessageBusinessImpl> {
+
+public class MessageServiceImpl<T extends MessageDtoImpl> implements IMessageBusinessService<MessageDtoImpl> {
 
     @Autowired
     private MessageRepository repository;
 
     @Autowired
-    private IMessageMapper mapper;
+    private IMessageMapperModel mapperDao;
+
+    @Autowired
+    private IMessageMapperDto mapperDto;
+
+    @Autowired
+    private IUserMapperDto userMapperDto;
 
     @Override
-    public List<MessageBusinessImpl> findAll() {
-        return this.mapListModelToBusiness(repository.findAll());
-    }
-
-    @Override
-    public Optional<MessageBusinessImpl> findById(Long id) {
-        Optional<MessageModel> messageModel = repository.findById(id);
-        return messageModel.map(model -> mapper.modelToBusiness(model));
-    }
-
-    @Override
-    public MessageBusinessImpl create(@Valid MessageBusinessImpl messageBusiness) {
-        return this.saveModelWithBusiness(messageBusiness);
+    public List<MessageDtoImpl> findAll() {
+        return mapListBusinessToDto(mapListModelToBusiness(repository.findAll()));
     }
 
     @Override
-    public MessageBusinessImpl update(@Valid MessageBusinessImpl messageBusiness) {
-        return this.saveModelWithBusiness(messageBusiness);
+    public MessageDtoImpl findById(Long id) {
+        return mapperDto.businessToDto(checkDaoExist(id));
     }
 
     @Override
-    public void delete(MessageBusinessImpl messageBusiness) {
-        repository.delete(mapper.businessToModel(messageBusiness));
+    public MessageDtoImpl create(MessageDtoImpl dto) {
+        return saveModelWithBusiness(mapperDto.dtoToBusiness(dto));
     }
 
-    public List<MessageBusinessImpl> findMessagesByUserIndex(UserBusinessImpl userBusiness) {
-        return this.mapListModelToBusiness(
-            repository.findMessagesByUserIndex(mapper.userBusinessToModel(userBusiness))
-        );
+    @Override
+    public MessageDtoImpl update(MessageDtoImpl dto) {
+        //dBO reference to tag in base
+        Optional<MessageBusinessImpl> messageToUpdate = repository
+            .findById(dto.getIndex())
+            .map(model -> mapperDao
+                .modelToBusiness(model));
+
+        if (messageToUpdate.isEmpty()) {
+            throw new EntityNotFoundException(String.format("No found for %s", dto.getIndex().toString()));
+        } else {
+            MessageBusinessImpl business = mapperDto.dtoToBusiness(dto);
+            business.setChangeDate(new Date());
+            MessageModel result = repository.save(mapperDao.businessToModel(business));
+
+            return mapperDto.businessToDto(mapperDao.modelToBusiness(result));
+        }
     }
 
-    private List<MessageModel> mapListBusinessToModel(List<MessageBusinessImpl> messageBusiness) {
-        return messageBusiness.stream().map(e -> mapper.businessToModel(e)).collect(Collectors.toList());
+    @Override
+    public void delete(Long id) throws RuntimeException {
+        repository.delete(mapperDao.businessToModel(checkDaoExist(id)));
+    }
+
+    public List<MessageDtoImpl> findMessagesByUserIndex(UserDtoImpl dto) {
+        return mapListBusinessToDto(mapListModelToBusiness(
+            repository.findMessagesByUserIndex(mapperDao.userBusinessToModel(userMapperDto.dtoToBusiness(dto)))
+        ));
     }
 
     private List<MessageBusinessImpl> mapListModelToBusiness(List<MessageModel> messageModels) {
-        return messageModels.stream().map(e -> mapper.modelToBusiness(e)).collect(Collectors.toList());
+        return messageModels.stream().map(e -> mapperDao.modelToBusiness(e)).collect(Collectors.toList());
     }
 
-    private MessageBusinessImpl saveModelWithBusiness(MessageBusinessImpl messageBusiness) {
-        return mapper.modelToBusiness(repository.save(mapper.businessToModel(messageBusiness)));
+    private List<MessageDtoImpl> mapListBusinessToDto(List<MessageBusinessImpl> business) {
+        return business.stream().map(e -> mapperDto.businessToDto(e)).collect(Collectors.toList());
+    }
+
+    private MessageDtoImpl saveModelWithBusiness(MessageBusinessImpl messageBusiness) {
+        return mapperDto.businessToDto(mapperDao.modelToBusiness(repository.save(mapperDao.businessToModel(messageBusiness))));
+    }
+
+    private MessageBusinessImpl checkDaoExist(Long id) {
+        Optional<MessageModel> messageModel = repository.findById(id);
+
+        //If message don't exist throw exception
+        if (messageModel.isEmpty()) {
+            throw new EntityNotFoundException(String.format("No message found for %s", id.toString()));
+        }
+
+        return mapperDao.modelToBusiness(messageModel.get());
     }
 }

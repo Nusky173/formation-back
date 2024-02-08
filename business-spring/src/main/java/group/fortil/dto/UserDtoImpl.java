@@ -1,20 +1,33 @@
-package group.fortil.business;
+package group.fortil.dto;
 
-public class UserBusinessImpl extends BusinessImpl implements IUserBusiness {
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
 
+public class UserDtoImpl extends DtoImpl<Long> implements IUserDto {
+
+    @NotEmpty(message = "User should has a first name")
+    @Size(min = 3, max = 50, message = "User's first name must contains at least 3 character")
     private String firstName;
 
+    @Size(min = 3, max = 50, message = "User's first name must contains at least 3 character")
     private String lastName;
 
+    @Email
+    @NotEmpty(message = "User should fill a valid Email address")
     private String emailAddress;
 
+    @NotBlank
+    @NotEmpty(message = "User's password could not be null")
+    @Size(min = 3, max = Integer.MAX_VALUE, message = "User's first name must contains at least 3 character")
     private String loginCode;
 
-    public UserBusinessImpl() {
+    public UserDtoImpl() {
         super();
     }
 
-    public UserBusinessImpl(
+    public UserDtoImpl(
         String firstName,
         String lastName,
         String emailAddress,
@@ -28,7 +41,7 @@ public class UserBusinessImpl extends BusinessImpl implements IUserBusiness {
     }
 
     public String getFirstName() {
-        return this.firstName;
+        return firstName;
     }
 
     public void setFirstName(String firstName) {
@@ -36,7 +49,7 @@ public class UserBusinessImpl extends BusinessImpl implements IUserBusiness {
     }
 
     public String getLastName() {
-        return this.lastName;
+        return lastName;
     }
 
     public void setLastName(String lastName) {
@@ -44,7 +57,7 @@ public class UserBusinessImpl extends BusinessImpl implements IUserBusiness {
     }
 
     public String getEmailAddress() {
-        return this.emailAddress;
+        return emailAddress;
     }
 
     public void setEmailAddress(String emailAddress) {
@@ -61,11 +74,11 @@ public class UserBusinessImpl extends BusinessImpl implements IUserBusiness {
 
     @Override
     public String toString() {
-        return "UserBusinessImpl{" +
+        return "UserDtoImpl{" +
             "firstName='" + firstName + '\'' +
             ", lastName='" + lastName + '\'' +
             ", emailAddress='" + emailAddress + '\'' +
-            ", loginCode='***\'' " +
+            ", loginCode='***'" +
             '}';
     }
 }

@@ -6,7 +6,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
-public interface IUserMapper extends IMapper<UserBusinessImpl, UserModel> {
+public interface IUserMapperModel extends IMapperModel<UserBusinessImpl, UserModel> {
 
     @Mapping(source = "userIndex", target = "index")
     @Mapping(source = "lastName", target = "lastName")

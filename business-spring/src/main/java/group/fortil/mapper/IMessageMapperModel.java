@@ -12,7 +12,7 @@ import org.mapstruct.Mapping;
 import java.util.List;
 
 @Mapper(componentModel = "spring")
-public interface IMessageMapper extends IMapper<MessageBusinessImpl, MessageModel> {
+public interface IMessageMapperModel extends IMapperModel<MessageBusinessImpl, MessageModel> {
 
     @Mapping(source = "messageIndex", target = "index")
     @Mapping(source = "content", target = "text")

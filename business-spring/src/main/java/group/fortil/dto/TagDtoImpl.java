@@ -1,20 +1,23 @@
-package group.fortil.business;
+package group.fortil.dto;
 
-public class TagBusinessImpl extends BusinessImpl implements ITagBusiness {
+import jakarta.validation.constraints.NotBlank;
 
+public class TagDtoImpl extends DtoImpl<Long> implements ITagDto {
+
+    @NotBlank(message = "Tag should not be blank")
     private String value;
 
-    public TagBusinessImpl() {
+    public TagDtoImpl() {
         super();
     }
 
-    public TagBusinessImpl(String value) {
+    public TagDtoImpl(String value) {
         super();
         this.value = value;
     }
 
     public String getValue() {
-        return this.value;
+        return value;
     }
 
     public void setValue(String value) {
@@ -23,7 +26,7 @@ public class TagBusinessImpl extends BusinessImpl implements ITagBusiness {
 
     @Override
     public String toString() {
-        return "TagBusinessImpl{" +
+        return "TagDtoImpl{" +
             "value='" + value + '\'' +
             '}';
     }

@@ -20,7 +20,7 @@
     <dependencies>
         <dependency>
             <groupId>group.fortil</groupId>
-            <artifactId>business-spring</artifactId>
+            <artifactId>ws-server</artifactId>
         </dependency>
 
         <dependency>
