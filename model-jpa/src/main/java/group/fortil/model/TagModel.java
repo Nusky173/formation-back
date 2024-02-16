@@ -26,6 +26,14 @@ public class TagModel extends Model {
         this.name = name;
     }
 
+    private TagModel(
+        String name,
+        Long index
+    ) {
+        this.name = name;
+        this.tagIndex = index;
+    }
+
     public Long getTagIndex() {
         return tagIndex;
     }

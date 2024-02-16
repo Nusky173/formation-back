@@ -16,6 +16,14 @@ public class TagDtoImpl extends DtoImpl<Long> implements ITagDto {
         this.value = value;
     }
 
+    public TagDtoImpl(
+        Long index,
+        String value
+    ) {
+        super(index);
+        this.value = value;
+    }
+
     public String getValue() {
         return value;
     }

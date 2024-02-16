@@ -18,20 +18,27 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-
 public class MessageServiceImpl<T extends MessageDtoImpl> implements IMessageBusinessService<MessageDtoImpl> {
 
-    @Autowired
-    private MessageRepository repository;
+    MessageRepository repository;
 
-    @Autowired
-    private IMessageMapperModel mapperDao;
+    IMessageMapperModel mapperDao;
 
-    @Autowired
-    private IMessageMapperDto mapperDto;
+    IMessageMapperDto mapperDto;
 
-    @Autowired
-    private IUserMapperDto userMapperDto;
+    IUserMapperDto userMapperDto;
+
+    public MessageServiceImpl(
+        @Autowired MessageRepository repository,
+        @Autowired IMessageMapperModel mapperDao,
+        @Autowired IMessageMapperDto mapperDto,
+        @Autowired IUserMapperDto userMapperDto
+    ) {
+        this.repository = repository;
+        this.mapperDao = mapperDao;
+        this.mapperDto = mapperDto;
+        this.userMapperDto = userMapperDto;
+    }
 
     @Override
     public List<MessageDtoImpl> findAll() {
@@ -72,9 +79,12 @@ public class MessageServiceImpl<T extends MessageDtoImpl> implements IMessageBus
         repository.delete(mapperDao.businessToModel(checkDaoExist(id)));
     }
 
-    public List<MessageDtoImpl> findMessagesByUserIndex(UserDtoImpl dto) {
+    public List<MessageDtoImpl> findMessagesByUser(UserDtoImpl dto) {
         return mapListBusinessToDto(mapListModelToBusiness(
-            repository.findMessagesByUserIndex(mapperDao.userBusinessToModel(userMapperDto.dtoToBusiness(dto)))
+            repository
+                .findMessagesByUser(mapperDao
+                    .userBusinessToModel(userMapperDto
+                        .dtoToBusiness(dto)))
         ));
     }
 

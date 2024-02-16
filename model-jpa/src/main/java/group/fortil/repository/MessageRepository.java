@@ -10,5 +10,5 @@ import java.util.List;
 @Repository
 public interface MessageRepository extends IRepository<MessageModel, Long> {
 
-    List<MessageModel> findMessagesByUserIndex(UserModel user);
+    List<MessageModel> findMessagesByUser(UserModel userModel);
 }

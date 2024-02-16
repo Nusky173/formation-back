@@ -22,14 +22,21 @@ import java.util.stream.Collectors;
 @Validated
 public class MessageControllerImpl implements IMessageController {
 
-    @Autowired
     MessageServiceImpl<MessageDtoImpl> messageService;
 
-    @Autowired
     UserServiceImpl<UserDtoImpl> userService;
 
-    @Autowired
     TagServiceImpl<TagDtoImpl> tagService;
+
+    public MessageControllerImpl(
+        @Autowired MessageServiceImpl<MessageDtoImpl> messageService,
+        @Autowired UserServiceImpl<UserDtoImpl> userService,
+        @Autowired TagServiceImpl<TagDtoImpl> tagService
+    ) {
+        this.messageService = messageService;
+        this.userService = userService;
+        this.tagService = tagService;
+    }
 
     /**
      * @param date accept filtering on publicationDate for a message
@@ -103,7 +110,7 @@ public class MessageControllerImpl implements IMessageController {
             messageDto
                 .getTagList()
                 .stream()
-                .filter(e -> e.getIndex() != tagId)
+                .filter(e -> e.getIndex().equals(tagId))
                 .toList());
 
         return messageService.update(messageDto);
@@ -128,7 +135,7 @@ public class MessageControllerImpl implements IMessageController {
     public List<MessageDtoImpl> getUserMessage(@PathVariable("ownerId") Long ownerId) throws EntityNotFoundException {
         UserDtoImpl owner = userService.findById(ownerId);
 
-        return messageService.findMessagesByUserIndex(owner);
+        return messageService.findMessagesByUser(owner);
     }
 
 

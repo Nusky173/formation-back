@@ -38,6 +38,20 @@ public class UserModel extends Model {
         this.email = email;
     }
 
+    private UserModel(
+        String firstName,
+        String lastName,
+        String password,
+        String email,
+        Long userIndex
+    ) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.password = password;
+        this.email = email;
+        this.userIndex = userIndex;
+    }
+
     public Long getUserIndex() {
         return userIndex;
     }

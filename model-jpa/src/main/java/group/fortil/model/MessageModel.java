@@ -9,7 +9,7 @@ import java.util.List;
 @Entity
 @Table(name = "message")
 @NamedQueries({
-    @NamedQuery(name = "MessageModel.findMessagesByUserIndex", query = "select m from MessageModel m where m.user = ?1")
+    @NamedQuery(name = "MessageModel.findMessagesByUser", query = "select m from MessageModel m where m.user = ?1")
 })
 public class MessageModel extends Model {
 
@@ -50,6 +50,16 @@ public class MessageModel extends Model {
     ) {
         this.content = content;
         this.user = user;
+    }
+
+    private MessageModel(
+        String content,
+        UserModel user,
+        Long index
+    ) {
+        this.content = content;
+        this.user = user;
+        this.messageIndex = index;
     }
 
     public Long getMessageIndex() {

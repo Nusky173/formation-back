@@ -21,18 +21,29 @@ import java.util.stream.Collectors;
 @Validated
 public class UserServiceImpl<T extends UserDtoImpl> implements IUserBusinessService<UserDtoImpl> {
 
-    @Autowired
-    private UserRepository repository;
+    IUserMapperModel mapperDao;
 
-    @Autowired
-    private IUserMapperModel mapperDao;
+    IUserMapperDto mapperDto;
 
-    @Autowired
-    private IUserMapperDto mapperDto;
+    UserRepository repository;
+
+    public UserServiceImpl(
+        @Autowired IUserMapperModel mapperDao,
+        @Autowired IUserMapperDto mapperDto,
+        @Autowired UserRepository repository
+    ) {
+        this.repository = repository;
+        this.mapperDao = mapperDao;
+        this.mapperDto = mapperDto;
+    }
 
     @Override
     public List<UserDtoImpl> findAll() {
-        return this.mapListBusinessToModel(mapListModelToBusiness(repository.findAll()));
+        List<UserModel> users = repository.findAll();
+
+        return users.isEmpty() ?
+            List.of() :
+            mapListBusinessToModel(mapListModelToBusiness(repository.findAll()));
     }
 
     @Override

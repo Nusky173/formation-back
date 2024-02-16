@@ -27,6 +27,20 @@ public class UserBusinessImpl extends BusinessImpl implements IUserBusiness {
         this.loginCode = loginCode;
     }
 
+    public UserBusinessImpl(
+        Long index,
+        String firstName,
+        String lastName,
+        String emailAddress,
+        String loginCode
+    ) {
+        super(index);
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.emailAddress = emailAddress;
+        this.loginCode = loginCode;
+    }
+
     public String getFirstName() {
         return this.firstName;
     }

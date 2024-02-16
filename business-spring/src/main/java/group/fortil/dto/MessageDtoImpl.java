@@ -40,6 +40,16 @@ public class MessageDtoImpl extends DtoImpl<Long> implements IMessageDto {
         this.owner = owner;
     }
 
+    public MessageDtoImpl(
+        Long index,
+        String text,
+        UserDtoImpl owner
+    ) {
+        super(index);
+        this.text = text;
+        this.owner = owner;
+    }
+
     public String getText() {
         return text;
     }

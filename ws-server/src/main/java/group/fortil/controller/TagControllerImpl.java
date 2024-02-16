@@ -15,8 +15,14 @@ import java.util.List;
 @Validated
 public class TagControllerImpl implements ITagController {
 
-    @Autowired
+
     TagServiceImpl<TagDtoImpl> tagService;
+
+    public TagControllerImpl(
+        @Autowired TagServiceImpl<TagDtoImpl> tagService
+    ) {
+        this.tagService = tagService;
+    }
 
     @Override
     @GetMapping

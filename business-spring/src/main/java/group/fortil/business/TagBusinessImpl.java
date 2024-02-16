@@ -13,6 +13,14 @@ public class TagBusinessImpl extends BusinessImpl implements ITagBusiness {
         this.value = value;
     }
 
+    public TagBusinessImpl(
+        Long index,
+        String value
+    ) {
+        super(index);
+        this.value = value;
+    }
+
     public String getValue() {
         return this.value;
     }

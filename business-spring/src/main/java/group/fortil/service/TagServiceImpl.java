@@ -18,15 +18,23 @@ import java.util.stream.Collectors;
 @Service
 @Validated
 public class TagServiceImpl<T extends TagDtoImpl> implements ITagBusinessService<TagDtoImpl> {
+    
+    ITagMapperModel mapperDao;
 
-    @Autowired
-    private ITagMapperModel mapperDao;
+    ITagMapperDto mapperDto;
 
-    @Autowired
-    private ITagMapperDto mapperDto;
+    TagRepository repository;
 
-    @Autowired
-    private TagRepository repository;
+    public TagServiceImpl(
+        @Autowired ITagMapperModel mapperDao,
+        @Autowired ITagMapperDto mapperDto,
+        @Autowired TagRepository repository
+    ) {
+        this.repository = repository;
+        this.mapperDao = mapperDao;
+        this.mapperDto = mapperDto;
+    }
+
 
     @Override
     public List<TagDtoImpl> findAll() {

@@ -40,6 +40,20 @@ public class UserDtoImpl extends DtoImpl<Long> implements IUserDto {
         this.loginCode = loginCode;
     }
 
+    public UserDtoImpl(
+        Long index,
+        String firstName,
+        String lastName,
+        String emailAddress,
+        String loginCode
+    ) {
+        super(index);
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.emailAddress = emailAddress;
+        this.loginCode = loginCode;
+    }
+
     public String getFirstName() {
         return firstName;
     }

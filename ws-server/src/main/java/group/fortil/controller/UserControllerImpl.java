@@ -16,8 +16,13 @@ import java.util.List;
 @Validated
 public class UserControllerImpl implements IUserController {
 
-    @Autowired
     UserServiceImpl<UserDtoImpl> userService;
+
+    public UserControllerImpl(
+        @Autowired UserServiceImpl<UserDtoImpl> userService
+    ) {
+        this.userService = userService;
+    }
 
     @Override
     @GetMapping

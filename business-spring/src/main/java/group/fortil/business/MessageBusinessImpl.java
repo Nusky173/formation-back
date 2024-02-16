@@ -29,6 +29,17 @@ public class MessageBusinessImpl extends BusinessImpl implements IMessageBusines
 
     }
 
+    public MessageBusinessImpl(
+        Long index,
+        String text,
+        UserBusinessImpl owner
+    ) {
+        super(index);
+        this.text = text;
+        this.owner = owner;
+
+    }
+
     public String getText() {
         return this.text;
     }
