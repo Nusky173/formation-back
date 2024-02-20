@@ -23,6 +23,8 @@ public class UserDtoImpl extends DtoImpl<Long> implements IUserDto {
     @Size(min = 3, max = Integer.MAX_VALUE, message = "User's first name must contains at least 3 character")
     private String loginCode;
 
+    private Integer role;
+
     public UserDtoImpl() {
         super();
     }
@@ -84,6 +86,14 @@ public class UserDtoImpl extends DtoImpl<Long> implements IUserDto {
 
     public void setLoginCode(String loginCode) {
         this.loginCode = loginCode;
+    }
+
+    public Integer getRole() {
+        return role;
+    }
+
+    public void setRole(Integer role) {
+        this.role = role;
     }
 
     @Override

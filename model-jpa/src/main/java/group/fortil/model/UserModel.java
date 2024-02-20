@@ -23,6 +23,9 @@ public class UserModel extends Model {
     @Column(name = "email", length = 50, nullable = false, unique = true)
     private String email;
 
+    @Column(name = "role", nullable = false)
+    private Integer role;
+
     public UserModel() {
     }
 
@@ -92,6 +95,13 @@ public class UserModel extends Model {
         this.password = password;
     }
 
+    public Integer getRole() {
+        return role;
+    }
+
+    public void setRole(Integer role) {
+        this.role = role;
+    }
 
     @Override
     public String toString() {

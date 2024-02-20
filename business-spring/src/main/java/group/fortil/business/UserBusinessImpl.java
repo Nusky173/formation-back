@@ -10,6 +10,8 @@ public class UserBusinessImpl extends BusinessImpl implements IUserBusiness {
 
     private String loginCode;
 
+    private Integer role;
+
     public UserBusinessImpl() {
         super();
     }
@@ -71,6 +73,14 @@ public class UserBusinessImpl extends BusinessImpl implements IUserBusiness {
 
     public void setLoginCode(String loginCode) {
         this.loginCode = loginCode;
+    }
+
+    public Integer getRole() {
+        return role;
+    }
+
+    public void setRole(Integer role) {
+        this.role = role;
     }
 
     @Override
